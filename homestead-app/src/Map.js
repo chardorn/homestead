@@ -8,6 +8,7 @@ import Sidebar from './Sidebar.js';
 import Information from './Information.js';
 import {Col, Row, Container} from 'react-bootstrap';
 import ScriptTag from 'react-script-tag';
+import Header from './Header.js';
 
 
 
@@ -28,29 +29,30 @@ export default class Map extends React.Component {
       goat_points: [],
       chicken_coop: [], //per six chickens!!
       cow_horse_points: [],
-      wire_points: []
+      power_line_points: []
     }
   }
 
   render(){
   return (
     <div className="App">
+      <Header/>
       <ScriptTag type="text/javascript" src = "./Zipcodes.js" />
       <header className="App-header">
       <link rel="stylesheet" type="text/css" href="./index.css" />
       
-      <Container>
+      <Container style = {{marginTop: "20px"}}>
       <Row>
         <Col>
-        sidebar
+        
           <Sidebar data={this}/>
         </Col>
         <Col>
-        map
+        
           <GoogleMap data={this} />
         </Col>
         <Col>
-        info
+        
           <Information data={this}/>
         </Col>
       </Row>

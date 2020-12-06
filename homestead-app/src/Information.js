@@ -16,8 +16,11 @@ const Information = ({data})  => {
             <p> Area of plot: {data.state.area} acres </p>
             <p> Goat Fencing: {calcPerimeter(data.state.points.goat_points).toFixed(1)} meters </p>
             <p> Cow/Horse Fencing: {calcPerimeter(data.state.points.cow_horse_points).toFixed(1)} meters</p>
-            <p> Energy Production: {getEnergyOutput(data.state.points.solar).toFixed(1)} watts </p>
-            <p> <strong> Cost: ${getCost(data.state).toFixed(2)} </strong> </p>
+            <p> Power lines:  {calcPerimeter(data.state.points.power_line_points).toFixed(1)} meters </p>
+            <p> Energy Production: {getEnergyOutput(data.state.points)} </p>
+            <div style = {{backgroundColor: "#2a7036", height: "50px", paddingTop: "1px"}}>
+            <p style = {{margin: "10px"}}> <strong> Cost: ${getCost(data.state).toFixed(2)} </strong> </p>
+            </div>
         </div>
     )
 }
@@ -28,12 +31,24 @@ function getCost(state){
     total_cost += state.points.chicken_coop.length * 600
     total_cost += calcPerimeter(state.points.goat_points) * 3.28084
     total_cost += calcPerimeter(state.points.cow_horse_points) * 3.28 * 15
+    total_cost += calcPerimeter(state.points.power_line_points) /1609.34 * 20000
+    total_cost += state.area * 10000
 
     return total_cost
 }
 
-function getEnergyOutput(solar){
-   return solar.length * 350
+function getEnergyOutput(points){
+    let statement = "";
+    if(points.power_line_points.length > 0){
+        statement += "grid connect"
+        if(points.solar.length != 0){
+            statement += " + " + (points.solar.length * 350).toFixed(1) + " watts"
+        }
+    }
+    else{
+        statement += (points.solar.length * 350).toFixed(1) + " watts"
+    }
+    return statement
 }
 
 

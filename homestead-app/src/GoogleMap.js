@@ -74,6 +74,7 @@ const GoogleMap = ({data, placeName}) => {
       strokeOpacity: 1.0,
       strokeWeight: 1
     });
+    goat_fence.setMap(googleMap);
 
     //Add cow/horse fencing to map
     let cow_horse_fence = new window.google.maps.Polyline({
@@ -83,8 +84,18 @@ const GoogleMap = ({data, placeName}) => {
       strokeOpacity: 2.0,
       strokeWeight: 1
     });
-    goat_fence.setMap(googleMap);
     cow_horse_fence.setMap(googleMap);
+
+    //Add powerlines to map
+    let powerlines = new window.google.maps.Polyline({
+      path: points.power_line_points,
+      geodesic: true,
+      strokeColor: "#ffff00",
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    });
+    powerlines.setMap(googleMap)
+
   })
 
 
@@ -136,6 +147,12 @@ const GoogleMap = ({data, placeName}) => {
           console.log(points.cow_horse_points)
           data.setState({
             cow_horse_points: points.cow_horse_points.push(mapsMouseEvent.latLng.toJSON())
+          })
+        };
+        if(data.state.mode == "power lines"){
+          console.log(points.power_line_points)
+          data.setState({
+            goat_points: points.power_line_points.push(mapsMouseEvent.latLng.toJSON())
           })
         };
         if(data.state.mode == "solar"){
