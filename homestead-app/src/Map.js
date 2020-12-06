@@ -7,13 +7,17 @@ import Editor from './Editor.js';
 import Sidebar from './Sidebar.js';
 import Information from './Information.js';
 import {Col, Row, Container} from 'react-bootstrap';
+import ScriptTag from 'react-script-tag';
+
 
 
 
 export default class Map extends React.Component {
   state = {
-    lat: 70,
-    lng: 70,
+    lat: 35.9132,
+    lng: -79.046761,
+    zipcode: 0,
+    area: 0,
     zoom: 8,
     satellite: false, 
     mode: null,
@@ -22,8 +26,8 @@ export default class Map extends React.Component {
       boundary: undefined,
       solar: [],
       goat_points: [],
-      chicken_points: [],
-      cow_points: [],
+      chicken_coop: [], //per six chickens!!
+      cow_horse_points: [],
       wire_points: []
     }
   }
@@ -31,8 +35,8 @@ export default class Map extends React.Component {
   render(){
   return (
     <div className="App">
+      <ScriptTag type="text/javascript" src = "./Zipcodes.js" />
       <header className="App-header">
-      
       <link rel="stylesheet" type="text/css" href="./index.css" />
       
       <Container>

@@ -9,6 +9,8 @@
     "react": "^17.0.1",
     "react-columns": "^1.2.1",
     "react-dom": "^17.0.1",
+    "react-papaparse": "^3.11.0",
+    "react-script-tag": "^1.1.2",
     "react-scripts": "4.0.1",
     "web-vitals": "^0.2.4"
   },

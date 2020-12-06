@@ -3,6 +3,8 @@ import React, {Component} from 'react';
 import solar from './images/solar.png';
 import pencil from './images/pencil.png';
 import Columns from 'react-columns';
+import chicken_coop from './images/chicken_coop.png';
+
 
 const Sidebar = ({data}) => {
 
@@ -14,12 +16,12 @@ const Sidebar = ({data}) => {
                 img: pencil
             },
             {   name: "chicken coop",
-                img: undefined
+                img: chicken_coop
             },
             {   name: "goat fencing",
                 img: undefined
             },
-            {   name: "cow fencing",
+            {   name: "cow/horse fencing",
                 img: undefined
             },
             {   name: "wiring",

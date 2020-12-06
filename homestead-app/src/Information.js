@@ -1,35 +1,47 @@
 import {useEffect} from 'react';
 
-const Information = ({data}) => {
+
+const Information = ({data})  => {
+
+
     
     return(
+        
         <div style = {{width: "200px"}}>
+            {/* <script> {getData()}
+            </script> */}
             <p> Latitude: {data.state.lat} </p>
             <p> Longitude: {data.state.lng} </p>
-            <p> Zipcode: {getZipcode(data.state.lat, data.state.lng)}</p>
-            <p> Area of plot: {calcPolygonArea(data.state.points.boundary_points)} mi sq </p>
-            <p> Goat Fencing: {calcPerimeter(data.state.points.goat_points)} </p>
-            Cost: 
+            <p> Zipcode: {data.state.zipcode}</p>
+            <p> Area of plot: {data.state.area} acres </p>
+            <p> Goat Fencing: {calcPerimeter(data.state.points.goat_points).toFixed(1)} meters </p>
+            <p> Cow/Horse Fencing: {calcPerimeter(data.state.points.cow_horse_points).toFixed(1)} meters</p>
+            <p> Energy Production: {getEnergyOutput(data.state.points.solar).toFixed(1)} watts </p>
+            <p> <strong> Cost: ${getCost(data.state).toFixed(2)} </strong> </p>
         </div>
     )
 }
 
-function getZipcode(lat, lng){
-    useEffect(() => {
-        // const googleMapScript = document.createElement("script");
-        let result = "https://maps.googleapis.com/maps/api/geocode/json?" +
-        "latlng=" + lat + "," + lng +
-        "&key=AIzaSyADZGtDRvzKYb93JfGrhSuGRGXnlbonNWU"
-        console.log(result);
-      }, []);
-    
+function getCost(state){
+    let total_cost = 0;
+    total_cost += state.points.solar.length * 200
+    total_cost += state.points.chicken_coop.length * 600
+    total_cost += calcPerimeter(state.points.goat_points) * 3.28084
+    total_cost += calcPerimeter(state.points.cow_horse_points) * 3.28 * 15
+
+    return total_cost
 }
+
+function getEnergyOutput(solar){
+   return solar.length * 350
+}
+
 
 function calcPerimeter(points){
     if (points == undefined){
         return "0"
     }
-    console.log(points)
+    // console.log(points)
     let total_distance = 0;
     for (let i = 0, l = points.length; i < l - 1; i++) {
         let lat1 = points[i].lat;
@@ -51,34 +63,8 @@ function calcPerimeter(points){
 		total_distance += dist;
     }
 
-    return total_distance;
+    return total_distance * 1609.34;
 }
 
-
-function calcPolygonArea(coordinates) {
-    console.log(coordinates)
-
-    if(coordinates == undefined || coordinates.length < 3){
-        return "0"
-    }
-    let vertices = []
-    coordinates.forEach(coordinate => {
-        let vertex = {x: coordinate.lat, y: coordinate.lng};
-        vertices.push(vertex);
-    });
-    console.log(vertices)
-    var total = 0;
-    for (var i = 0, l = vertices.length; i < l; i++) {
-      var addX = vertices[i].x;
-      var addY = vertices[i == vertices.length - 1 ? 0 : i + 1].y;
-      var subX = vertices[i == vertices.length - 1 ? 0 : i + 1].x;
-      var subY = vertices[i].y;
-
-      total += (addX * addY * 0.5);
-      total -= (subX * subY * 0.5);
-    }
-
-    return Math.abs(total) * 69;
-}
 
 export default Information;
